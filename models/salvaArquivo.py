@@ -107,3 +107,25 @@ class VendaLog:
                 venda = json.loads(line)
                 vendas_data.append(venda)
         return vendas_data
+
+class QRLog:
+    def salvar_qr_code(self, qr_code_data):
+        data = [
+            qr_code_data,
+            False
+        ]
+
+        file_path = os.path.join("data", "qrcode.json")
+        with open(file_path, 'a') as file:
+            json.dump(data, file)
+            file.write('\n')
+
+    @staticmethod
+    def carregar_qr_codes():
+        qr_codes_data = []
+        file_path = os.path.join("data", "qrcodes.json")
+        with open(file_path, 'r') as file:
+            for line in file:
+                qr_code = json.loads(line)
+                qr_codes_data.append(qr_code)
+        return qr_codes_data

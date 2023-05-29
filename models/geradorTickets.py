@@ -6,6 +6,9 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from Crypto.Util.strxor import strxor
 from models.gerenciadorProdutos import GerenciadorDeProdutos
+from models.salvaArquivo import QRLog
+from PIL import Image
+from io import BytesIO
 
 class SalesTicketGenerator:
     def __init__(self):
@@ -44,14 +47,14 @@ class SalesTicketGenerator:
             document.add_picture(qr_code_image, width=Inches(2), height=Inches(2))
 
         # Save the document
-        filename = f"SalesTickets_{codigo}.odt"
+        filename = f"SalesTickets_{produto.nome.replace(' ', '_')}.docx"
         document.save(filename)
         print(f"Sales tickets saved to {filename}")
 
     def generate_identifier(self, product_id, index):
         identifier = f"{product_id}-{index}"
         sha256_hash = hashlib.sha256(identifier.encode()).hexdigest()
-        truncated_hash = sha256_hash[:5]  # Truncate to 8 characters
+        truncated_hash = sha256_hash[:7]  # Truncate to 8 characters
         return truncated_hash
 
     def generate_qr_code(self, data):
@@ -59,6 +62,11 @@ class SalesTicketGenerator:
         qr.add_data(data)
         qr.make(fit=True)
         qr_code_image = qr.make_image(fill_color="black", back_color="white")
-        qr_code_filename = f"QRCode_{data}.png"
-        qr_code_image.save(qr_code_filename)
-        return qr_code_filename
+
+        # Convert the image to bytes and create an in-memory image
+        image_stream = BytesIO()
+        qr_code_image.save(image_stream, format='PNG')
+        image_stream.seek(0)
+
+        return image_stream
+
