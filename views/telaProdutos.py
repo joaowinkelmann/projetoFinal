@@ -2,12 +2,15 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import simpledialog
 from models.salvaArquivo import ProdutoAcesso
+from models.gerenciadorProdutos import GerenciadorDeProdutos
+from models.geradorTickets import SalesTicketGenerator
 
 class ProdutosWindow(tk.Toplevel):
     def __init__(self, gerenciador):
         super().__init__()
 
         self.gerenciador = gerenciador
+        self.ticket_generator = SalesTicketGenerator()
 
         self.title("Mostrar Produtos")
         self.geometry("500x450")
@@ -56,6 +59,9 @@ class ProdutosWindow(tk.Toplevel):
 
         self.alterar_estoque_button = tk.Button(self, text="Alterar Estoque", command=self.alterar_estoque)
         self.alterar_estoque_button.pack(pady=10)
+
+        self.generate_tickets_button = tk.Button(self, text="Gerar Tickets", command=self.generate_tickets)
+        self.generate_tickets_button.pack(pady=10)
 
         self.search_entry.bind("<KeyRelease>", self.search_product)
         self.products_listbox.bind("<<ListboxSelect>>", self.show_product_details)
@@ -108,3 +114,19 @@ class ProdutosWindow(tk.Toplevel):
             messagebox.showinfo("Sucesso", "Estoque alterado com sucesso!")
         else:
             messagebox.showinfo("Aviso", "Nenhum valor de estoque fornecido.")
+            
+    def generate_tickets(self):
+        selected_index = self.products_listbox.curselection()
+        if not selected_index:
+            return
+
+        selected_product = self.gerenciador.produtos[selected_index[0]]
+        codigo = selected_product.codigo
+        quantity = simpledialog.askinteger("Gerar Tickets", f"Digite a quantidade de tickets para {selected_product.nome}:")
+
+        if quantity is not None:
+            self.ticket_generator.generate_sales_tickets(codigo, quantity)
+            messagebox.showinfo("Sucesso", "Tickets gerados com sucesso!")
+        else:
+            messagebox.showinfo("Aviso", "Nenhuma quantidade de tickets fornecida.")
+

@@ -11,26 +11,30 @@ class GerenciadorDeProdutos:
         self.produto_acesso = ProdutoAcesso()
         self.produtos = self.produto_acesso.carregar_produtos()
 
-    def adicionar_produto(self, nome, preco_venda, preco_custo, estoque, vendido):
-            codigo = self.generate_codigo(nome)
-            produto = self.buscar_produto(codigo)
-            if produto:
-                return False
-            else:
-                novo_produto = Produto(codigo, nome, preco_venda, preco_custo, estoque, vendido)
-                self.produtos.append(novo_produto)
-                self.produto_acesso.salvar_produtos(self)
-                return True
-        
     def generate_codigo(self, nome):
         string_to_hash = f"{nome}{time.time()}"
         codigo = hashlib.sha1(string_to_hash.encode()).hexdigest()
         return codigo
 
+    def adicionar_produto(self, nome, preco_venda, preco_custo, estoque, vendido):
+        codigo = self.generate_codigo(nome)
+        produto = self.buscar_produto(codigo)
+        if produto:
+            return False
+        else:
+            novo_produto = Produto(codigo, nome, preco_venda, preco_custo, estoque, vendido)
+            self.produtos.append(novo_produto)
+            self.produto_acesso.salvar_produtos(self)
+            return True
+
 
     def buscar_produto(self, codigo):
-        for produto in self.produtos:
-            if produto.codigo == codigo:
+        produto_acesso = ProdutoAcesso()
+        produtos = produto_acesso.carregar_produtos()
+        for produto in produtos:
+            print(str(produto.codigo))
+            print(str(codigo))
+            if str(produto.codigo) == str(codigo):
                 return produto
         return None
 
