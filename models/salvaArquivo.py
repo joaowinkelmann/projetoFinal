@@ -109,7 +109,7 @@ class VendaLog:
         return vendas_data
 
 class QRLog:
-    def salvar_qr_code(self, qr_code_data):
+    def salvar_qr_code(qr_code_data):
         data = [
             qr_code_data,
             False
@@ -123,7 +123,7 @@ class QRLog:
     @staticmethod
     def carregar_qr_codes():
         qr_codes_data = []
-        file_path = os.path.join("data", "qrcodes.json")
+        file_path = os.path.join("data", "qrcode.json")
         with open(file_path, 'r') as file:
             for line in file:
                 qr_code = json.loads(line)
