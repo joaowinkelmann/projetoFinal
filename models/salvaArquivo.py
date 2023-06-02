@@ -2,6 +2,7 @@ import datetime
 import json
 from models.produto import Produto
 import os
+from models.dbConn import connect
 
 class ProdutoAcesso:
     def __init__(self):
