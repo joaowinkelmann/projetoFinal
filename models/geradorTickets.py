@@ -45,6 +45,7 @@ class SalesTicketGenerator:
             document.add_heading("QR Code", level=2)
             qr_code_image = self.generate_qr_code(identifier)
             document.add_picture(qr_code_image, width=Inches(2), height=Inches(2))
+            QRLog.salvar_qr_code(identifier)
 
         # Save the document
         filename = f"SalesTickets_{produto.nome.replace(' ', '_')}.docx"

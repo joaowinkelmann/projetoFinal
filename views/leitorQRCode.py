@@ -41,7 +41,8 @@ class QRCodeReader:
         capture.release()
         cv2.destroyAllWindows()
 
-    def verify_qr_code(self, data):
+    @staticmethod
+    def verify_qr_code(data):
         qrcodes = QRLog.carregar_qr_codes()  # Load QR codes from the file
 
         for qrcode in qrcodes:
@@ -50,7 +51,7 @@ class QRCodeReader:
                     print("OK!")
                     # Mark the QR code as used and save the updated QR codes to the file
                     qrcode[1] = True
-                    QRLog.salvar_qr_code(qrcodes)
+                    QRLog.salvar_qr_code(qrcode)
                     return True
 
         return False

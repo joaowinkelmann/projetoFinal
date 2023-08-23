@@ -1,8 +1,13 @@
 import psycopg2
 from urllib.parse import urlparse
+from dotenv import load_dotenv
+import os
 
 def connect():
-    database_url = 'DATABASE_URL'
+    load_dotenv()
+    
+    # database_url = 'DATABASE_URL'
+    database_url = os.getenv("DB_URL")
 
     url_parts = urlparse(database_url)
     connection = psycopg2.connect(

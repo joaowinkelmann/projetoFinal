@@ -1,1 +1,1 @@
-[{"codigo": "879fe314f3c35828cace6ac994720b4d5b93a6d1", "nome": "123", "preco_venda": 123.0, "preco_custo": 12.0, "estoque": 123, "vendido": 1}]
+[{"codigo": "879fe314f3c35828cace6ac994720b4d5b93a6d1", "nome": "123", "preco_venda": 123.0, "preco_custo": 12.0, "estoque": 123, "vendido": 1}, {"codigo": "a272ba8350d57d37a7e4e3ddc4fca63994f36526", "nome": "777", "preco_venda": 7.0, "preco_custo": 7.0, "estoque": 7, "vendido": 1}, {"codigo": "2ce62a6774f8667dce6556f5b755f71df318d310", "nome": "teste", "preco_venda": 12.0, "preco_custo": 1.0, "estoque": 100, "vendido": 1}]

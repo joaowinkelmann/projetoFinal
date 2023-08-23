@@ -111,22 +111,35 @@ class VendaLog:
 
 class QRLog:
     def salvar_qr_code(qr_code_data):
-        data = [
-            qr_code_data,
-            False
-        ]
-
         file_path = os.path.join("data", "qrcode.json")
-        with open(file_path, 'a') as file:
-            json.dump(data, file)
-            file.write('\n')
+        
+        # Load existing JSON data
+        existing_data = []
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                existing_data = [json.loads(line) for line in file]
+        
+        # Check if qr_code_data is already present and update the flag
+        for item in existing_data:
+            if item[0] == qr_code_data:
+                print("achou")
+                item[1] = True
+                break
+        
+        # Write the updated data back to the JSON file
+        with open(file_path, 'w') as file:
+            for item in existing_data:
+                json.dump(item, file)
+                file.write('\n')
 
     @staticmethod
     def carregar_qr_codes():
-        qr_codes_data = []
+        # Load QR codes from the file
         file_path = os.path.join("data", "qrcode.json")
-        with open(file_path, 'r') as file:
-            for line in file:
-                qr_code = json.loads(line)
-                qr_codes_data.append(qr_code)
-        return qr_codes_data
+        qrcodes = []
+
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                qrcodes = [json.loads(line) for line in file]
+
+        return qrcodes
