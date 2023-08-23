@@ -3,11 +3,11 @@ from tkinter import messagebox
 from models.dbConn import connect
 
 class LoginWindow(tk.Toplevel):
-    def __init__(self, parent, authentication_callback, login_successful_callback):
+    def __init__(self, parent, login_successful_callback):
         super().__init__(parent)
         self.title("Login")
         self.parent = parent
-        self.authentication_callback = authentication_callback
+        # self.authentication_callback = authentication_callback
         self.login_successful_callback = login_successful_callback
         self.configure(background="#F0F0F0")
 
@@ -39,7 +39,7 @@ class LoginWindow(tk.Toplevel):
         if (username and password):
             res = self.auth(username, password)
             # print(type(res))
-            print(res[0])
+            # print(res[0])
         else:
             messagebox.showerror("Error", "Please provide an username and password")
         
