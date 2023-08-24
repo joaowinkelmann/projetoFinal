@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+
 from views.telaLogin import LoginWindow
+from views.telaSignup import SignupWindow
 
 class SplashScreen(tk.Tk):
     def __init__(self, launch_main_app_callback):
@@ -15,8 +17,8 @@ class SplashScreen(tk.Tk):
         login_button = ttk.Button(self, text="Log In", command=self.open_login_window)
         login_button.pack(pady=10)
 
-        create_account_button = ttk.Button(self, text="Create New Account", command=self.create_account)
-        create_account_button.pack(pady=10)
+        signup_button = ttk.Button(self, text="Create New Account", command=self.open_signup_window)
+        signup_button.pack(pady=10)
 
     def open_login_window(self):
         # Open the LoginWindow
@@ -28,9 +30,13 @@ class SplashScreen(tk.Tk):
         # mandar o user_id de volta para o main_app
         self.launch_main_app()
 
-    def create_account(self):
+    def open_signup_window(self):
         # Handle new account creation
-        pass
+        signup_window = SignupWindow(self, self.signup_successful_callback)
+        # pass
+
+    def signup_successful_callback(self, user_id):
+        print(user_id + " aaaa")
 
 if __name__ == "__main__":
     app = SplashScreen()

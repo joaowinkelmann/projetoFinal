@@ -35,13 +35,12 @@ class LoginWindow(tk.Toplevel):
     def login(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
+        res = None
 
         if (username and password):
             res = self.auth(username, password)
             # print(type(res))
             # print(res[0])
-        else:
-            messagebox.showerror("Error", "Please provide an username and password")
         
         if (res != None):
             # return True
@@ -49,10 +48,3 @@ class LoginWindow(tk.Toplevel):
         else:
             messagebox.showerror("Error", "Invalid username or password.")
             # return False
-        
-        # if username == "your_username" and password == "your_password":
-        #     messagebox.showinfo("Success", "Login successful!")
-        #     if self.login_successful_callback:
-        #         self.login_successful_callback()  # Call the successful login callback
-        # else:
-        #     messagebox.showerror("Error", "Invalid username or password.")
